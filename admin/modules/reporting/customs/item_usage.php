@@ -93,11 +93,7 @@ if (!$reportView) {
         </div>
     </div>
     <div style="padding-top: 10px; clear: both;">
-<<<<<<< HEAD
-    <input type="button" name="moreFilter" value="<?php echo __('Show More Filter Options'); ?>" onclick="showHideTableRows('filterForm', 1, this, '<?php echo __('Show More Filter Options'); ?>', '<?php echo __('Hide Filter Options'); ?>')" />
-=======
     <input type="button" name="moreFilter" value="<?php echo __('Show More Filter Options'); ?>" />
->>>>>>> 26f806e50f995722844bef21d8857901f806c91d
     <input type="submit" name="applyFilter" value="<?php echo __('Apply Filter'); ?>" />
     <input type="hidden" name="reportView" value="true" />
     </div>
