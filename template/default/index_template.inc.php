@@ -418,6 +418,7 @@ $social = array (
     <?php } ?>
 </div>
 </div>
+<div align="center">Visitor Counter : <script language="Javascript" src="http://localhost/slims5_awriel/lib/gcount/gcount.php?page=counter"><!-- // --></script></div>
 </div>
   <div class="footer">
    <div class="container_12">
