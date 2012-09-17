@@ -150,6 +150,7 @@ if (!$reportView) {
     $reportgrid = new report_datagrid();
     $reportgrid->setSQLColumn('m.member_id AS \''.__('Member ID').'\'',
         'm.member_name AS \''.__('Member Name').'\'',
+        'm.inst_name AS \''.__('Institution').'\'',
         'l.item_code AS \''.__('Item Code').'\'',
         'b.title AS \''.__('Title').'\'',
         'l.loan_date AS \''.__('Loan Date').'\'',
@@ -204,14 +205,14 @@ if (!$reportView) {
    // callback function to show loan status
     function loanStatus($obj_db, $array_data)
     {
-        if ($array_data[6] == 0) {
+        if ($array_data[7] == 0) {
             return '<strong>'.__('On Loan').'</strong>';
         } else {
             return __('Returned');
         }
     }
     // modify column value
-    $reportgrid->modifyColumnContent(6, 'callback{loanStatus}');
+    $reportgrid->modifyColumnContent(7, 'callback{loanStatus}');
 
     // put the result into variables
     echo $reportgrid->createDataGrid($dbs, $table_spec, $num_recs_show);
@@ -221,6 +222,7 @@ if (!$reportView) {
     echo '</script>';
 	$xlsquery = 'SELECT m.member_id AS \''.__('Member ID').'\''.
         ', m.member_name AS \''.__('Member Name').'\''.
+        ', m.inst_name AS \''.__('Institution').'\''.
         ', l.item_code AS \''.__('Item Code').'\''.
         ', b.title AS \''.__('Title').'\''.
         ', l.loan_date AS \''.__('Loan Date').'\''.
