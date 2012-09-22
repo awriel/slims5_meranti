@@ -70,6 +70,7 @@ $table_spec = 'loan AS l
 $datagrid = new simbio_datagrid();
 $datagrid->setSQLColumn("i.item_code AS '".__('Item Code')."'",
     "m.member_id AS '".__('Member ID')."'",
+    "m.member_name AS '".__('Member Name')."'",
     "b.title AS '".__('Title')."'",
     "l.loan_date AS '".__('Loan Date')."'",
     "l.due_date AS '".__('Due Date')."'");
@@ -107,7 +108,7 @@ $datagrid->table_attr = 'align="center" id="dataList" cellpadding="5" cellspacin
 $datagrid->table_header_attr = 'class="dataListHeader" style="font-weight: bold;"';
 
 // set column width
-$datagrid->column_width = array(0 => '12%', 1 => '12%', 2 => '50%');
+$datagrid->column_width = array(0 => '10%', 1 => '8%', 2 => '20%',4 => '10%',5 => '10%');
 
 // put the result into variables
 $datagrid_result = $datagrid->createDataGrid($dbs, $table_spec, 20, false);
