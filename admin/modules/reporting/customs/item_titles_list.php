@@ -183,9 +183,12 @@ if (!$reportView) {
 
     // create datagrid
     $reportgrid = new report_datagrid();
-    $reportgrid->setSQLColumn('i.item_code AS \''.__('Item Code').'\'',
+    $reportgrid->setSQLColumn(
+        'i.received_date AS \''.__('Received Date').'\'',
+        'i.item_code AS \''.__('Item Code').'\'',
         'b.title AS \''.__('Title').'\'',
         'ct.coll_type_name AS \''.__('Collection Type').'\'',
+        'i.inventory_code AS \''.__('Inventory Code').'\'',
         's.item_status_name AS \''.__('Item Status').'\'',
         'b.call_number AS \''.__('Call Number').'\'', 'i.biblio_id');
     $reportgrid->setSQLorder('b.title ASC');
@@ -224,6 +227,10 @@ if (!$reportView) {
         if ($coll_type_IDs) {
             $criteria .= " AND i.coll_type_id IN($coll_type_IDs)";
         }
+    }
+    if (isset($_GET['inventoryCode']) AND !empty($_GET['inventoryCode'])) {
+        $inventory_code = $dbs->escape_string(trim($_GET['inventoryCode']));
+        $criteria .= ' AND i.inventory_code LIKE \'%'.$inventory_code.'%\'';
     }
     if (isset($_GET['startDate']) AND isset($_GET['untilDate'])) {
         $criteria .= ' AND (TO_DAYS(i.received_date) BETWEEN TO_DAYS(\''.$_GET['startDate'].'\') AND
@@ -264,14 +271,14 @@ if (!$reportView) {
     // callback function to show title and authors
     function showTitleAuthors($obj_db, $array_data)
     {
-        if (!$array_data[5]) {
+        if (!$array_data[7]) {
             return;
         }
         // author name query
         $_biblio_q = $obj_db->query('SELECT b.title, a.author_name FROM biblio AS b
             LEFT JOIN biblio_author AS ba ON b.biblio_id=ba.biblio_id
             LEFT JOIN mst_author AS a ON ba.author_id=a.author_id
-            WHERE b.biblio_id='.$array_data[5]);
+            WHERE b.biblio_id='.$array_data[7]);
         $_authors = '';
         while ($_biblio_d = $_biblio_q->fetch_row()) {
             $_title = $_biblio_d[0];
@@ -282,8 +289,8 @@ if (!$reportView) {
         return $_output;
     }
     // modify column value
-    $reportgrid->modifyColumnContent(1, 'callback{showTitleAuthors}');
-    $reportgrid->invisible_fields = array(5);
+    $reportgrid->modifyColumnContent(2, 'callback{showTitleAuthors}');
+    $reportgrid->invisible_fields = array(7);
 
     // put the result into variables
     echo $reportgrid->createDataGrid($dbs, $table_spec, $num_recs_show);
