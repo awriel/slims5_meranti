@@ -73,6 +73,7 @@ if (!$reportView) {
             <?php
             $recapby_options[] = array('', __('Classification'));
             $recapby_options[] = array('gmd', __('GMD'));
+            $recapby_options[] = array('label', __('Label'));
             $recapby_options[] = array('collType', __('Collection Type'));
             $recapby_options[] = array('language', __('Language'));
             echo simbio_form_element::selectList('recapBy', $recapby_options);
@@ -132,6 +133,31 @@ if (!$reportView) {
 			}
             /* GMD END */
 			break;
+			case 'label' :
+            $recapby = __('Label');
+            /* LABEL TYPE */
+            $label_q = $dbs->query("SELECT DISTINCT label_name, label_desc FROM mst_label");
+            while ($label_d = $label_q->fetch_row()) {
+                $row_class = ($row_class == 'alterCellPrinted')?'alterCellPrinted2':'alterCellPrinted';
+                $output .= '<tr><td class="'.$row_class.'"><strong style="font-size: 1.5em;">'.$label_d[1].'</strong></td>';
+               // count by title
+                $bytitle_q = $dbs->query("SELECT COUNT(biblio_id) FROM biblio WHERE labels LIKE '%".$label_d[0]."%'");
+                $bytitle_d = $bytitle_q->fetch_row();
+                $output .= '<td class="'.$row_class.'"><strong style="font-size: 1.3em;">'.$bytitle_d[0].'</strong></td>';
+				
+                // count by item
+                $byitem_q = $dbs->query("SELECT COUNT(item_id) FROM item AS i INNER JOIN biblio AS b
+                    ON i.biblio_id=b.biblio_id
+                    WHERE b.labels LIKE '%".$label_d[0]."%'");
+                $byitem_d = $byitem_q->fetch_row();
+                $output .= '<td class="'.$row_class.'"><strong style="font-size: 1.3em;">'.$byitem_d[0].'</strong></td>';
+
+				$xlsrows[$xls_rc] = array($label_d[1],$bytitle_d[0],$byitem_d[0]);
+				$xls_rc++;
+                $output .= '</tr>';
+            }
+            /* LABEL END */
+            break;
             case 'language' :
             $recapby = __('Language');
             /* LANGUAGE */
