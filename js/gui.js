@@ -419,4 +419,10 @@ $('document').ready(function() {
     // disable form with class "disabled"
     $('form.disabled').disableForm();
     $(document).registerAdminEvents({ajaxifyLink: false, ajaxifyForm: false});
+
+    // Google Voice Search    
+    $('#keyword').bind('webkitspeechchange', function() {
+        $(this).parent().submit();
+    });                
+    
 });
