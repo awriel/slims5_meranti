@@ -81,4 +81,20 @@ $receipt_fontSize = '7pt';
 $receipt_header_fontSize = '8pt';
 $receipt_titleLength = 100;
 
+// label include barcode print settings
+/* This source modified by Muh Tarom (http://irigomi.com) on Friday, 05 October 2012*/
+/* measurement in cm */
+$labcode_page_margin = 0.2;
+$labcode_items_per_row = 2;
+$labcode_items_margin = 0.1;
+$labcode_box_width = 9.6;
+$labcode_box_height = 4.4;
+$labcode_include_header_text = 1; // change to 0 if dont want to use header in each barcode
+$labcode_cut_title = 0; // maximum characters in title to appear in each barcode. change to 0 if you dont want the title cutted
+$labcode_header_text = ''; // keep empty if you want to use Library Name as a header text
+$labcode_fonts = "Arial, Verdana, Helvetica, 'Trebuchet MS'"; // font to use
+$labcode_font_size = 11;
+$labcode_scale = 200;
+$labcode_border_size = 1; // in pixels
+
 ?>
