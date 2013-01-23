@@ -283,6 +283,8 @@ if (isset($_POST['saveData']) AND $can_read AND $can_write) {
         if (trim($_POST['itemCodePattern']) != '' && $_POST['itemCodeStart'] > 0 && $_POST['itemCodeEnd'] > 0) {
           $hasil = array();
           $pattern = trim($_POST['itemCodePattern']);
+		  $coll_type = trim($_POST['collTypeID']);
+		  
           // get last zero chars
           preg_match('@0+$@i', $pattern, $hasil);
           $zeros = strlen($hasil[0]);
@@ -293,10 +295,12 @@ if (isset($_POST['saveData']) AND $can_read AND $can_write) {
             if ($zeros > 0) {
               $itemcode = preg_replace('@0{'.$len.'}$@i', $b, $pattern);
             } else { $itemcode = $pattern.$b; }
-
-            $item_insert_sql = sprintf("INSERT IGNORE INTO item (biblio_id, item_code, call_number)
-              VALUES (%d, '%s', '%s')", $updateRecordID?$updateRecordID:$last_biblio_id, $itemcode, $data['call_number']);
+            $item_insert_sql = sprintf("INSERT IGNORE INTO item (biblio_id, item_code, call_number, coll_type_id)
+              VALUES (%d, '%s', '%s', '%s')", $updateRecordID?$updateRecordID:$last_biblio_id, $itemcode, $data['call_number'],$coll_type);
             @$dbs->query($item_insert_sql);
+			///  $item_insert_sql = sprintf("INSERT IGNORE INTO item (biblio_id, item_code, call_number)
+            ///  VALUES (%d, '%s', '%s')", $updateRecordID?$updateRecordID:$last_biblio_id, $itemcode, $data['call_number'] );
+            ///  @$dbs->query($item_insert_sql);
           }
         }
 
@@ -375,8 +379,7 @@ if (isset($_POST['saveData']) AND $can_read AND $can_write) {
 
 if (!$in_pop_up) {
 /* search form */
-?>
-<fieldset class="menuBox">
+?><fieldset class="menuBox">
 <div class="menuBoxInner biblioIcon">
     <div class="per_title">
 	    <h2><?php echo __('Bibliographic'); ?></h2>
@@ -408,7 +411,8 @@ if (!$in_pop_up) {
 /* main content */
 if (isset($_POST['detail']) OR (isset($_GET['action']) AND $_GET['action'] == 'detail')) {
     if (!($can_read AND $can_write)) {
-        die('<div class="errorBox">'.__('You are not authorized to view this section').'</div>');
+        die('<div class="errorBox">
+'.__('You are not authorized to view this section').'</div>');
     }
     /* RECORD FORM */
     // try query
@@ -474,7 +478,16 @@ if (isset($_POST['detail']) OR (isset($_GET['action']) AND $_GET['action'] == 'd
     $form->addTextField('textarea', 'specDetailInfo', __('Specific Detail Info'), $rec_d['spec_detail_info'], 'rows="2" style="width: 100%"');
     // biblio item batch add
     $str_input = __('Pattern').': <input type="text" class="small_input" name="itemCodePattern" value="'.$sysconf['batch_item_code_pattern'].'" /> &nbsp;&nbsp;';
-    $str_input .= __('From').': <input type="text" class="small_input" name="itemCodeStart" value="0" /> '.__('To').' <input type="text" class="small_input" name="itemCodeEnd" value="0" />';
+    $str_input .= __('From').': <input type="text" class="small_input" name="itemCodeStart" value="0" /> '.__('To').' <input type="text" class="small_input" name="itemCodeEnd" value="0" />&nbsp;&nbsp;';
+    // add by heru subekti
+	// collection type
+    // get collection type data related to this record from database
+	$str_input .=  __('Collection Type').':&nbsp;<select name="collTypeID" />';
+                  $coll_type_q = $dbs->query("SELECT coll_type_id, coll_type_name FROM mst_coll_type ORDER BY coll_type_id ASC");
+                  $coll_type_options = array();			
+                  while ($coll_type_d = $coll_type_q->fetch_row()) {;
+                  $str_input .= '<option value ='.$coll_type_d[0].'>'.$coll_type_d[1].'</option>'; };
+				  $str_input .= '</select>';
     $form->addAnything(__('Item(s) code batch generator'), $str_input);
     // biblio item add
     if (!$in_pop_up AND $form->edit_mode) {
