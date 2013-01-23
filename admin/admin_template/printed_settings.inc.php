@@ -90,11 +90,37 @@ $labcode_items_margin = 0.1;
 $labcode_box_width = 9.6;
 $labcode_box_height = 4.4;
 $labcode_include_header_text = 1; // change to 0 if dont want to use header in each barcode
-$labcode_cut_title = 0; // maximum characters in title to appear in each barcode. change to 0 if you dont want the title cutted
+$labcode_cut_title = 50; // maximum characters in title to appear in each barcode. change to 0 if you dont want the title cutted
 $labcode_header_text = "PERPUSTAKAAN <br /> SMK NEGERI 1 BAWANG"; // keep empty if you want to use Library Name as a header text
 $labcode_fonts = "Arial, Verdana, Helvetica, 'Trebuchet MS'"; // font to use
 $labcode_font_size = 11;
 $labcode_scale = 200;
 $labcode_border_size = 1; // in pixels
+
+// Book Card print settings
+/* This source modified by Muh Tarom (http://irigomi.com) on Friday, 21 December 2012*/
+/* measurement in cm */
+		$bookcard_page_margin = 0.2;
+		$bookcard_items_per_row = 2;
+		$bookcard_width = 9;
+		$bookcard_height = 10; //tinggi minimal kartu buku untuk kertas A4 / minimals height recomended for A4 paper
+		$bookcard_include_header_text = 1; // change to 0 if dont want to use header in each book card
+		$bookcard_header_text = ''; // keep empty if you want to use Library Name as a header text
+		$bookcard_cut_title = 36; // maximum characters in title to appear in each book card. change to 0 if you dont want the title cutted
+		$bookcard_cut_authors = 36; // maximum characters in authors to appear in each book card. change to 0 if you dont want the authors cutted
+		$bookcard_fonts = "Arial, Verdana, Helvetica, 'Trebuchet MS'"; // font to use
+		
+// Book Slip print settings
+/* This source modified by Muh Tarom (http://irigomi.com) on Tuesday, 25 December 2012*/
+/* measurement in cm */
+		$bookslip_page_margin = 0.2;
+		$bookslip_items_per_row = 2;
+		$bookslip_width = 9;
+		$bookslip_height = 20; //tinggi minimal kartu buku untuk kertas A4 / minimals height recomended for A4 paper
+		$bookslip_include_header_text = 1; // change to 0 if dont want to use header in each book card
+		$bookslip_header_text = ''; // keep empty if you want to use Library Name as a header text
+		$bookslip_cut_title = 36; // maximum characters in title to appear in each book card. change to 0 if you dont want the title cutted
+		$bookslip_cut_authors = 36; // maximum characters in authors to appear in each book card. change to 0 if you dont want the authors cutted
+		$bookslip_fonts = "Arial, Verdana, Helvetica, 'Trebuchet MS'"; // font to use
 
 ?>
