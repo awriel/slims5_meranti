@@ -36,20 +36,24 @@
 /* HTML Pop Up Div */
 #htmlPop {
     width: 600px;
-    background: #000;
+    background: #57169a;
     padding: 10px;
     position: fixed;
-    -moz-border-radius: 5px;
+	box-shadow: 0px 0px 2px #fff;
 }
 
 #htmlPopTitle {
-    color: #FFFFFF;
+    color: #333;
     font-weight: bold;
     padding: 5px;
 }
 
 #htmlPopFrame {
     width: 100%;
+}
+
+#closePop{
+	text-decoration: none;
 }
 
 /* Calendar */
